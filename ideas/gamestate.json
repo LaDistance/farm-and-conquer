@@ -1,0 +1,41 @@
+{
+    "tickCounter": 0,
+    "money": 1000,
+
+    "parcels": [{
+            "id": 1,
+            "x": 0,
+            "y": 0,
+            "farmBuildings": [{
+                    "building": {
+                        "id": 1,
+                        "name": "Vegetable garden",
+                        "moneyPerTick": 10
+                    },
+                    "count": 5
+                },
+
+                {
+                    "building": {
+                        "id": 2,
+                        "name": "Wheat Farm",
+                        "moneyPerTick": 100
+                    },
+                    "count": 5
+                },
+                {
+                    "building": {
+                        "id": 3,
+                        "name": "Onion Farm",
+                        "moneyPerTick": 200
+                    },
+                    "count": 5
+                }
+            ],
+            "soldiers": 1
+        }
+
+    ],
+    "ownedParcels": [1]
+
+}

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useTimer } from "react-timer-hook";
-import { incrementMoney, selectMoney } from "../features/money/moneySlice";
+import { OwnedParcels } from "../pages/OwnedParcels/OwnedParcels";
+import { Root } from "../components/Root/Root";
+import { incrementMoney } from "../features/money/moneySlice";
 import { selectOwnedParcels } from "../features/ownedParcels/ownedParcelsSlice";
 import { selectParcels } from "../features/parcels/parcelsSlice";
-import { TickCounter } from "../features/tickCounter/TickCounter";
-import {
-  increment,
-  selectTickCount,
-} from "../features/tickCounter/tickCounterSlice";
+import { updateSeconds } from "../features/seconds/secondsSlice";
+import { increment } from "../features/tickCounter/tickCounterSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
+import { ParcelPage } from "../pages/ParcelPage/ParcelPage";
+import { ParcelsMap } from "../pages/ParcelsMap/ParcelsMap";
 
 export const GameManager = () => {
-  const tickCount = useAppSelector(selectTickCount);
-  const money = useAppSelector(selectMoney);
   const parcels = useAppSelector(selectParcels);
   const ownedParcels = useAppSelector(selectOwnedParcels);
   const dispatch = useAppDispatch();
@@ -59,10 +59,35 @@ export const GameManager = () => {
     onExpire: updateGame,
   });
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      children: [
+        {
+          path: "/map",
+          element: <ParcelsMap />,
+        },
+        {
+          path: "/owned-parcels",
+          element: <OwnedParcels />,
+        },
+        {
+          path: "/parcel/:parcelId",
+          element: <ParcelPage />,
+        },
+      ],
+    },
+  ]);
+
+  // Make seconds a global state
+  useEffect(() => {
+    dispatch(updateSeconds(seconds));
+  }, [seconds]);
+
   return (
     <div>
-      <TickCounter tickCount={tickCount} seconds={seconds} />
-      <span>You have {money} dollars.</span>
+      <RouterProvider router={router} />
     </div>
   );
 };

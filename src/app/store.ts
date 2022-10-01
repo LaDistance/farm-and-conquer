@@ -3,8 +3,10 @@ import tickCounterReducer from "../features/tickCounter/tickCounterSlice";
 import moneyReducer from "../features/money/moneySlice";
 import parcelsReducer from "../features/parcels/parcelsSlice";
 import ownedParcelsReducer from "../features/ownedParcels/ownedParcelsSlice";
+import secondsReducer from "../features/seconds/secondsSlice";
 export const store = configureStore({
   reducer: {
+    seconds: secondsReducer,
     tickCounter: tickCounterReducer,
     money: moneyReducer,
     parcels: parcelsReducer,

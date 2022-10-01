@@ -2,7 +2,7 @@ import React from "react";
 import { TickCounter } from "./features/tickCounter/TickCounter";
 import "./App.css";
 import "antd/dist/antd.css";
-import { GameManager } from "./app/game";
+import { GameManager } from "./app/GameManager";
 function App() {
   return (
     <div className="App">

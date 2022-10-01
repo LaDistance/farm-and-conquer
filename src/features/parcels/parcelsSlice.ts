@@ -1,22 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Parcel } from "../../types/Parcel";
-
+import { farmBuildings as dataFarmBuildings } from "../../data/farmBuildings";
+import { OwnedFarmBuilding } from "../../types/OwnedFarmBuilding";
 const initialState: Parcel[] = [
   {
     id: 1,
     x: 0,
     y: 0,
-    farmBuildings: [
-      {
-        building: {
-          id: 1,
-          name: "Farm",
-          moneyPerTick: 50,
-        },
-        count: 5,
-      },
-    ],
+    farmBuildings: dataFarmBuildings.map((farmBuilding) => ({
+      building: farmBuilding,
+      count: 0,
+    })),
     soldiers: 0,
   },
 ];
@@ -40,7 +35,10 @@ export const parcelsSlice = createSlice({
       state[parcelIndex] = action.payload;
     },
 
-    setParcelFarmBuildings: (state, action: PayloadAction<Parcel>) => {
+    setParcelFarmBuildings: (
+      state,
+      action: PayloadAction<{ id: number; farmBuildings: OwnedFarmBuilding[] }>
+    ) => {
       const parcelIndex = state.findIndex(
         (parcel) => parcel.id === action.payload.id
       );
@@ -68,5 +66,10 @@ export const {
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectParcels = (state: RootState) => state.parcels;
+
+export const selectParcelFarmBuildings = (state: RootState, id: number) => {
+  const parcel = state.parcels.find((parcel) => parcel.id === id);
+  return parcel!.farmBuildings;
+};
 
 export default parcelsSlice.reducer;
