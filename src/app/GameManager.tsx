@@ -11,6 +11,7 @@ import { increment } from "../features/tickCounter/tickCounterSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { ParcelPage } from "../pages/ParcelPage/ParcelPage";
 import { ParcelsMap } from "../pages/ParcelsMap/ParcelsMap";
+import { Button } from "antd";
 
 export const GameManager = () => {
   const parcels = useAppSelector(selectParcels);
@@ -54,7 +55,7 @@ export const GameManager = () => {
     updateMoney();
   };
 
-  const { seconds, restart } = useTimer({
+  const { seconds, pause, resume, restart } = useTimer({
     expiryTimestamp: firstTimestamp,
     onExpire: updateGame,
   });
@@ -87,6 +88,12 @@ export const GameManager = () => {
 
   return (
     <div>
+      <Button type="primary" onClick={() => pause()}>
+        Pause the timer
+      </Button>
+      <Button type="primary" onClick={() => resume()}>
+        Resume the timer
+      </Button>
       <RouterProvider router={router} />
     </div>
   );
