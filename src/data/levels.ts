@@ -55,7 +55,7 @@ export const levels: Level[] = [
   {
     id: 2,
     name: "Second level",
-    description: "Can you manage all of these at once ?.",
+    description: "Can you manage all of these at once ?",
     initialMoney: 1000,
     // Add a win condition
     parcels: [
