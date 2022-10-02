@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Divider } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -42,7 +42,7 @@ export const Navbar = ({
     setPaused(!paused);
   };
 
-  /*   const handleSaveGame = () => {
+  const handleSaveGame = () => {
     const state = {
       money,
       parcels,
@@ -62,12 +62,20 @@ export const Navbar = ({
       dispatch(setOwnedParcels(state.ownedParcels));
       dispatch(updateLevel(state.level));
     }
-  }; */
+  };
   return (
     <div className={styles.navbar}>
       <Link to="/">Home</Link>
-      <Link to="/owned-parcels">Owned parcels</Link>
-      <Link to="/map">Map</Link>
+      {level !== 0 ? (
+        <>
+          <Link to="/owned-parcels">Owned parcels</Link>
+          <Link to="/map">Map</Link>
+        </>
+      ) : (
+        <></>
+      )}
+      <Divider />
+      {level !== 0 ? <span>Current level : {level}</span> : <></>}
       <span>Current balance : {money} pognons.</span>
       <SecondsCounter />
       <Button
@@ -77,12 +85,12 @@ export const Navbar = ({
       >
         {paused ? "Play" : "Pause"}
       </Button>
-      {/*       <Button className={styles.button} type="primary" onClick={handleSaveGame}>
+      <Button className={styles.button} type="primary" onClick={handleSaveGame}>
         Save game
       </Button>
       <Button className={styles.button} type="primary" onClick={handleLoadGame}>
         Load game
-      </Button> */}
+      </Button>
     </div>
   );
 };
