@@ -32,3 +32,10 @@ export const farmBuildings: FarmBuilding[] = [
     price: 100_000,
   },
 ];
+
+export const initializeFarmBuildings = () => {
+  farmBuildings.map((farmBuilding) => ({
+    building: farmBuilding,
+    count: 0,
+  }));
+};
