@@ -14,10 +14,14 @@ export const ownedParcelsSlice = createSlice({
     ungrantParcel: (state, action: PayloadAction<number>) => {
       state = state.filter((id) => id !== action.payload);
     },
+    setOwnedParcels: (state, action: PayloadAction<number[]>) => {
+      state = action.payload;
+    },
   },
 });
 
-export const { grantParcel, ungrantParcel } = ownedParcelsSlice.actions;
+export const { grantParcel, ungrantParcel, setOwnedParcels } =
+  ownedParcelsSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

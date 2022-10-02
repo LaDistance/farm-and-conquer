@@ -4,15 +4,22 @@ import { useTimer } from "react-timer-hook";
 import { OwnedParcels } from "../pages/OwnedParcels/OwnedParcels";
 import { Root } from "../components/Root/Root";
 import { incrementMoney } from "../features/money/moneySlice";
-import { selectOwnedParcels } from "../features/ownedParcels/ownedParcelsSlice";
-import { selectParcels } from "../features/parcels/parcelsSlice";
+import {
+  selectOwnedParcels,
+  setOwnedParcels,
+} from "../features/ownedParcels/ownedParcelsSlice";
+import {
+  selectParcels,
+  setParcel,
+  setParcels,
+} from "../features/parcels/parcelsSlice";
 import { updateSeconds } from "../features/seconds/secondsSlice";
 import { increment } from "../features/tickCounter/tickCounterSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { ParcelPage } from "../pages/ParcelPage/ParcelPage";
 import { ParcelsMap } from "../pages/ParcelsMap/ParcelsMap";
-import { Button } from "antd";
-
+import { updateLevel } from "../features/level/levelSlice";
+import { levels } from "../data/levels";
 export const GameManager = () => {
   const parcels = useAppSelector(selectParcels);
   const ownedParcels = useAppSelector(selectOwnedParcels);
@@ -55,6 +62,24 @@ export const GameManager = () => {
     updateMoney();
   };
 
+  const initializeGame = (level: number) => {
+    // Initializes all the game data for a new game, depending on the chosen level
+
+    // Does the level exist ?
+    if (Object.keys(levels).includes(level.toString())) {
+      console.warn("This level does not exist.");
+      return;
+    }
+
+    const loadedLevel = levels[level as keyof typeof levels];
+
+    // set the level
+    dispatch(updateLevel(level));
+    // set the parcels
+    dispatch(setParcels(loadedLevel.parcels));
+    // set the owned parcels
+    dispatch(setOwnedParcels(loadedLevel.ownedParcels));
+  };
   const { seconds, pause, resume, restart } = useTimer({
     expiryTimestamp: firstTimestamp,
     onExpire: updateGame,

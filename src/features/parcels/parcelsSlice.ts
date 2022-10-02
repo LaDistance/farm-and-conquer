@@ -3,6 +3,7 @@ import { RootState } from "../../app/store";
 import { Parcel } from "../../types/Parcel";
 import { farmBuildings as dataFarmBuildings } from "../../data/farmBuildings";
 import { OwnedFarmBuilding } from "../../types/OwnedFarmBuilding";
+
 const initialState: Parcel[] = [
   {
     id: 1,
@@ -27,6 +28,11 @@ export const parcelsSlice = createSlice({
     removeParcel: (state, action: PayloadAction<number>) => {
       state = state.filter((parcel) => parcel.id !== action.payload);
     },
+
+    setParcels: (state, action: PayloadAction<Parcel[]>) => {
+      state = action.payload;
+    },
+
     // Updates
     setParcel: (state, action: PayloadAction<Parcel>) => {
       const parcelIndex = state.findIndex(
@@ -75,6 +81,7 @@ export const parcelsSlice = createSlice({
 export const {
   addParcel,
   removeParcel,
+  setParcels,
   setParcel,
   setParcelFarmBuildings,
   setParcelSoldiers,

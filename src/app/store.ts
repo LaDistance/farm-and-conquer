@@ -4,6 +4,8 @@ import moneyReducer from "../features/money/moneySlice";
 import parcelsReducer from "../features/parcels/parcelsSlice";
 import ownedParcelsReducer from "../features/ownedParcels/ownedParcelsSlice";
 import secondsReducer from "../features/seconds/secondsSlice";
+import levelReducer from "../features/level/levelSlice";
+
 export const store = configureStore({
   reducer: {
     seconds: secondsReducer,
@@ -11,6 +13,7 @@ export const store = configureStore({
     money: moneyReducer,
     parcels: parcelsReducer,
     ownedParcels: ownedParcelsReducer,
+    level: levelReducer,
   },
 });
 

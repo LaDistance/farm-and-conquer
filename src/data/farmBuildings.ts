@@ -34,7 +34,7 @@ export const farmBuildings: FarmBuilding[] = [
 ];
 
 export const initializeFarmBuildings = () => {
-  farmBuildings.map((farmBuilding) => ({
+  return farmBuildings.map((farmBuilding) => ({
     building: farmBuilding,
     count: 0,
   }));
