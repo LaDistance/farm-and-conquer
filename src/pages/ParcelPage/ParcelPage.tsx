@@ -14,6 +14,7 @@ import { getLayouts } from "../../data/layouts";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import styles from "./ParcelPage.module.scss";
+import pageStyles from "../../styles/PageStyles.module.scss";
 import { ResponsiveGridLayout } from "../../components/ResponsiveGridLayout/ResponsiveGridLayout";
 export const ParcelPage = () => {
   // Hooks
@@ -63,7 +64,7 @@ export const ParcelPage = () => {
   };
 
   return (
-    <div>
+    <div className={pageStyles.page}>
       <ResponsiveGridLayout layouts={getLayouts(parcel.farmBuildings)}>
         {parcel.farmBuildings.map((building) => (
           <div className={styles.gridItem} key={building.building.id}>
