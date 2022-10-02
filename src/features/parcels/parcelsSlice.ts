@@ -45,6 +45,24 @@ export const parcelsSlice = createSlice({
       state[parcelIndex].farmBuildings = action.payload.farmBuildings;
     },
 
+    setBuildingCount: (
+      state,
+      action: PayloadAction<{
+        parcelId: number;
+        buildingId: number;
+        count: number;
+      }>
+    ) => {
+      const parcelIndex = state.findIndex(
+        (parcel) => parcel.id === action.payload.parcelId
+      );
+      const buildingIndex = state[parcelIndex].farmBuildings.findIndex(
+        (farmBuilding) => farmBuilding.building.id === action.payload.buildingId
+      );
+      state[parcelIndex].farmBuildings[buildingIndex].count =
+        action.payload.count;
+    },
+
     setParcelSoldiers: (state, action: PayloadAction<Parcel>) => {
       const parcelIndex = state.findIndex(
         (parcel) => parcel.id === action.payload.id
@@ -60,6 +78,7 @@ export const {
   setParcel,
   setParcelFarmBuildings,
   setParcelSoldiers,
+  setBuildingCount,
 } = parcelsSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
