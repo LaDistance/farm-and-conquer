@@ -77,12 +77,12 @@ export const Navbar = ({
       >
         {paused ? "Play" : "Pause"}
       </Button>
-      <Button className={styles.button} type="primary" onClick={handleSaveGame}>
+      {/*       <Button className={styles.button} type="primary" onClick={handleSaveGame}>
         Save game
       </Button>
       <Button className={styles.button} type="primary" onClick={handleLoadGame}>
         Load game
-      </Button>
+      </Button> */}
     </div>
   );
 };
