@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-// Credits to Thomas Hennes for this hook
-// https://stackoverflow.com/a/47686478
-
 export const useAudio = (url: string) => {
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(true);
