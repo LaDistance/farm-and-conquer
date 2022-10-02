@@ -6,7 +6,7 @@ export interface MoneyState {
 }
 
 const initialState: MoneyState = {
-  value: 1000,
+  value: 0,
 };
 
 export const moneySlice = createSlice({

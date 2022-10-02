@@ -1,6 +1,6 @@
 import { Button, Card } from "antd";
 import { Link } from "react-router-dom";
-import { Parcel } from "../types/Parcel";
+import { Parcel } from "../../types/Parcel";
 
 export const ParcelCard = ({ parcel }: { parcel: Parcel }) => {
   return (

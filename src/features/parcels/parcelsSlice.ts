@@ -4,18 +4,7 @@ import { Parcel } from "../../types/Parcel";
 import { farmBuildings as dataFarmBuildings } from "../../data/farmBuildings";
 import { OwnedFarmBuilding } from "../../types/OwnedFarmBuilding";
 
-const initialState: Parcel[] = [
-  {
-    id: 1,
-    x: 0,
-    y: 0,
-    farmBuildings: dataFarmBuildings.map((farmBuilding) => ({
-      building: farmBuilding,
-      count: 0,
-    })),
-    soldiers: 0,
-  },
-];
+const initialState: Parcel[] = [];
 
 export const parcelsSlice = createSlice({
   name: "parcels",

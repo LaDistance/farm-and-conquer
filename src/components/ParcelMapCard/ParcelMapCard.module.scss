@@ -1,0 +1,22 @@
+.parcelMapCard {
+  height: 100%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 10px;
+  border-radius: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+.parcelMapCardContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

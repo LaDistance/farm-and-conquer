@@ -6,4 +6,5 @@ export type Parcel = {
   y: number;
   farmBuildings: OwnedFarmBuilding[];
   soldiers: number;
+  owner: number;
 };

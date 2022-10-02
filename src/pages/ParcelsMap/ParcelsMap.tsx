@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { ParcelCard } from "../../components/Parcel";
+import { ParcelMapCard } from "../../components/ParcelMapCard/ParcelMapCard";
 import { selectParcels } from "../../features/parcels/parcelsSlice";
 import pageStyles from "../../styles/PageStyles.module.scss";
 export const ParcelsMap = () => {
@@ -36,7 +36,7 @@ export const ParcelsMap = () => {
             key={parcel.id}
             data-grid={{ x: parcel.x * 2, y: parcel.y, w: 2, h: 1 }}
           >
-            <ParcelCard parcel={parcel} />
+            <ParcelMapCard parcel={parcel} owner={parcel.owner} />
           </div>
         ))}
       </ResponsiveReactGridLayout>
