@@ -145,6 +145,7 @@ export const GameManager = () => {
     dispatch(updateSeconds(seconds));
   }, [seconds]);
 
+  // Save to file
   return (
     <div>
       <RouterProvider router={router} />
