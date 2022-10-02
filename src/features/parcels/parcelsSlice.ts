@@ -64,7 +64,7 @@ export const parcelsSlice = createSlice({
       state[parcelIndex].warBuildings = action.payload.warBuildings;
     },
 
-    setBuildingCount: (
+    setFarmBuildingCount: (
       state,
       action: PayloadAction<{
         parcelId: number;
@@ -81,6 +81,23 @@ export const parcelsSlice = createSlice({
       state[parcelIndex].farmBuildings[buildingIndex].count =
         action.payload.count;
     },
+    setWarBuildingCount: (
+      state,
+      action: PayloadAction<{
+        parcelId: number;
+        buildingId: number;
+        count: number;
+      }>
+    ) => {
+      const parcelIndex = state.findIndex(
+        (parcel) => parcel.id === action.payload.parcelId
+      );
+      const buildingIndex = state[parcelIndex].warBuildings.findIndex(
+        (warBuilding) => warBuilding.building.id === action.payload.buildingId
+      );
+      state[parcelIndex].warBuildings[buildingIndex].count =
+        action.payload.count;
+    },
 
     setParcelSoldiers: (
       state,
@@ -90,6 +107,23 @@ export const parcelsSlice = createSlice({
         (parcel) => parcel.id === action.payload.id
       );
       state[parcelIndex].soldiers = action.payload.soldiers;
+    },
+
+    addParcelSoldiers: (
+      state,
+      action: PayloadAction<{ id: number; soldiers: number }>
+    ) => {
+      const parcelIndex = state.findIndex(
+        (parcel) => parcel.id === action.payload.id
+      );
+      if (parcelIndex !== -1) {
+        state[parcelIndex].soldiers += action.payload.soldiers;
+      } else {
+        console.log(
+          "[addParcelSoldiers] Parcel not found : ",
+          action.payload.id
+        );
+      }
     },
   },
 });
@@ -101,8 +135,10 @@ export const {
   setParcel,
   setParcelFarmBuildings,
   setParcelSoldiers,
-  setBuildingCount,
+  setFarmBuildingCount,
+  setWarBuildingCount,
   setParcelWarBuildings,
+  addParcelSoldiers,
 } = parcelsSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
