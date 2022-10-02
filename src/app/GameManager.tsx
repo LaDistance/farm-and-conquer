@@ -20,6 +20,9 @@ import { ParcelsMap } from "../pages/ParcelsMap/ParcelsMap";
 import { updateLevel } from "../features/level/levelSlice";
 import { levels } from "../data/levels";
 import { LevelChoice } from "../pages/LevelChoice/LevelChoice";
+import { useAudio } from "../hooks/useAudio";
+const music = require("../music/One-Bard-Band.mp3");
+
 export const GameManager = () => {
   const parcels = useAppSelector(selectParcels);
   const ownedParcels = useAppSelector(selectOwnedParcels);
@@ -27,6 +30,8 @@ export const GameManager = () => {
 
   // Flip state is necessary to force a re-render
   const [flipState, setFlipState] = useState(true);
+
+  const { playing, toggle } = useAudio(music);
 
   useEffect(() => {
     const time = new Date();
