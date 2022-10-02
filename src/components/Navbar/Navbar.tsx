@@ -42,7 +42,7 @@ export const Navbar = ({
     setPaused(!paused);
   };
 
-  const handleSaveGame = () => {
+  /*   const handleSaveGame = () => {
     const state = {
       money,
       parcels,
@@ -62,7 +62,7 @@ export const Navbar = ({
       dispatch(setOwnedParcels(state.ownedParcels));
       dispatch(updateLevel(state.level));
     }
-  };
+  }; */
   return (
     <div className={styles.navbar}>
       <Link to="/">Home</Link>
