@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Parcel } from "../../types/Parcel";
-import { farmBuildings as dataFarmBuildings } from "../../data/farmBuildings";
 import { OwnedFarmBuilding } from "../../types/OwnedFarmBuilding";
+import { OwnedWarBuilding } from "../../types/OwnedWarBuilding";
 
 const initialState: Parcel[] = [];
 
@@ -20,6 +20,20 @@ export const parcelsSlice = createSlice({
 
     setParcels: (state, action: PayloadAction<Parcel[]>) => {
       return action.payload;
+    },
+
+    setParcelOwner: (
+      state,
+      action: PayloadAction<{ id: number; owner: number }>
+    ) => {
+      const parcelIndex = state.findIndex(
+        (parcel) => parcel.id === action.payload.id
+      );
+      if (parcelIndex !== -1) {
+        state[parcelIndex].owner = action.payload.owner;
+      } else {
+        console.log("[setParcelOwner] Parcel not found : ", action.payload.id);
+      }
     },
 
     // Updates
@@ -40,6 +54,16 @@ export const parcelsSlice = createSlice({
       state[parcelIndex].farmBuildings = action.payload.farmBuildings;
     },
 
+    setParcelWarBuildings: (
+      state,
+      action: PayloadAction<{ id: number; warBuildings: OwnedWarBuilding[] }>
+    ) => {
+      const parcelIndex = state.findIndex(
+        (parcel) => parcel.id === action.payload.id
+      );
+      state[parcelIndex].warBuildings = action.payload.warBuildings;
+    },
+
     setBuildingCount: (
       state,
       action: PayloadAction<{
@@ -58,7 +82,10 @@ export const parcelsSlice = createSlice({
         action.payload.count;
     },
 
-    setParcelSoldiers: (state, action: PayloadAction<Parcel>) => {
+    setParcelSoldiers: (
+      state,
+      action: PayloadAction<{ id: number; soldiers: number }>
+    ) => {
       const parcelIndex = state.findIndex(
         (parcel) => parcel.id === action.payload.id
       );
@@ -75,6 +102,7 @@ export const {
   setParcelFarmBuildings,
   setParcelSoldiers,
   setBuildingCount,
+  setParcelWarBuildings,
 } = parcelsSlice.actions;
 
 // The function below is called a selector and allows us to select a value from

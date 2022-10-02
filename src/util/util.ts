@@ -20,3 +20,11 @@ export const getAllNeighbors = (parcels: Parcel[]) => {
   });
   return neighbors;
 };
+
+export const getUserParcelsNextTo = (parcel: Parcel, parcels: Parcel[]) => {
+  const neighbors = parcels.filter(
+    (otherParcel) =>
+      otherParcel.owner === 1 && distanceBetween(parcel, otherParcel) === 1
+  );
+  return neighbors;
+};

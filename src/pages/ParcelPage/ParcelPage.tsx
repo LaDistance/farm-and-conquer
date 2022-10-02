@@ -8,7 +8,11 @@ import { decrementMoney, selectMoney } from "../../features/money/moneySlice";
 import { Building } from "../../components/Building/Building";
 
 import { useEffect } from "react";
-import { getFarmBuildingsLayout, getLayouts } from "../../data/layouts";
+import {
+  getFarmBuildingsLayout,
+  getLayouts,
+  getWarBuildingsLayout,
+} from "../../data/layouts";
 
 // CSS
 import "react-grid-layout/css/styles.css";
@@ -16,6 +20,7 @@ import "react-resizable/css/styles.css";
 import styles from "./ParcelPage.module.scss";
 import pageStyles from "../../styles/PageStyles.module.scss";
 import { ResponsiveGridLayout } from "../../components/ResponsiveGridLayout/ResponsiveGridLayout";
+import { Divider } from "antd";
 export const ParcelPage = () => {
   // Hooks
   const { parcelId } = useParams<{ parcelId: string }>();
@@ -65,6 +70,9 @@ export const ParcelPage = () => {
 
   return (
     <div className={pageStyles.page}>
+      <div>Parcel management bar</div>
+      <Divider />
+      <h3>Farm buildings</h3>
       <ResponsiveGridLayout
         layouts={getLayouts(parcel.farmBuildings, getFarmBuildingsLayout)}
       >
@@ -76,6 +84,25 @@ export const ParcelPage = () => {
               price={building.building.price}
               individualIncome={building.building.moneyPerTick}
               income={building.building.moneyPerTick * building.count}
+              disabled={building.building.price > money}
+              handleBuy={() => buyBuilding(building.building.id, money)}
+            />
+          </div>
+        ))}
+      </ResponsiveGridLayout>
+      <Divider />
+      <h3>War buildings</h3>
+      <ResponsiveGridLayout
+        layouts={getLayouts(parcel.warBuildings, getWarBuildingsLayout)}
+      >
+        {parcel.warBuildings.map((building) => (
+          <div className={styles.gridItem} key={building.building.id}>
+            <Building
+              title={building.building.name}
+              count={building.count}
+              price={building.building.price}
+              individualIncome={building.building.costPerTick}
+              income={building.building.costPerTick * building.count}
               disabled={building.building.price > money}
               handleBuy={() => buyBuilding(building.building.id, money)}
             />

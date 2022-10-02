@@ -1,4 +1,5 @@
 import { OwnedFarmBuilding } from "../types/OwnedFarmBuilding";
+import { OwnedWarBuilding } from "../types/OwnedWarBuilding";
 import { Parcel } from "../types/Parcel";
 
 export const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
@@ -19,9 +20,26 @@ export const getFarmBuildingsLayout = (
   return layout;
 };
 
+export const getWarBuildingsLayout = (
+  cols: number,
+  warBuildings: OwnedWarBuilding[]
+) => {
+  const layout = warBuildings.map((warBuilding, index) => ({
+    i: warBuilding.building.id.toString(),
+    x: (index * 2) % cols,
+    y: (index * 2) / cols,
+    w: 2,
+    h: 1,
+  }));
+  return layout;
+};
+
 export const getLayouts = (
   array: any[],
-  func: typeof getFarmBuildingsLayout | typeof getParcelsLayout
+  func:
+    | typeof getFarmBuildingsLayout
+    | typeof getParcelsLayout
+    | typeof getWarBuildingsLayout
 ) => {
   const layouts = {
     lg: func(columns.lg, array),

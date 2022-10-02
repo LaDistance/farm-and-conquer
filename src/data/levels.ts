@@ -2,8 +2,9 @@ import { Layout, Layouts } from "react-grid-layout";
 import { Level } from "../types/Level";
 import { initializeFarmBuildings } from "./farmBuildings";
 import { columns } from "./layouts";
+import { initializeWarBuildings } from "./warBuildings";
 
-export const levels = [
+export const levels: Level[] = [
   {
     id: 1,
     name: "Tutorial level",
@@ -17,6 +18,7 @@ export const levels = [
         x: 1,
         y: 1,
         farmBuildings: initializeFarmBuildings(),
+        warBuildings: initializeWarBuildings(),
         soldiers: 0,
         owner: 1,
       },
@@ -25,6 +27,7 @@ export const levels = [
         x: 2,
         y: 1,
         farmBuildings: initializeFarmBuildings(),
+        warBuildings: initializeWarBuildings(),
         soldiers: 2000,
         owner: 0,
       },
@@ -33,6 +36,7 @@ export const levels = [
         x: 2,
         y: 2,
         farmBuildings: initializeFarmBuildings(),
+        warBuildings: initializeWarBuildings(),
         soldiers: 2000,
         owner: 0,
       },
@@ -41,6 +45,7 @@ export const levels = [
         x: 3,
         y: 2,
         farmBuildings: initializeFarmBuildings(),
+        warBuildings: initializeWarBuildings(),
         soldiers: 2000,
         owner: 0,
       },
