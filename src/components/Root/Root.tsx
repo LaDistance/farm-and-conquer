@@ -6,10 +6,21 @@ import { TickCounter } from "../../features/tickCounter/TickCounter";
 import { selectTickCount } from "../../features/tickCounter/tickCounterSlice";
 import { Navbar } from "../Navbar/Navbar";
 import styles from "./Root.module.scss";
-export const Root = () => {
+export const Root = ({
+  timerActions,
+}: {
+  timerActions: {
+    pause: () => void;
+    resume: () => void;
+    restart: (
+      newExpiryTimestamp: Date,
+      autoStart?: boolean | undefined
+    ) => void;
+  };
+}) => {
   return (
     <div className={styles.root}>
-      <Navbar />
+      <Navbar timerActions={timerActions} />
       <Outlet />
     </div>
   );

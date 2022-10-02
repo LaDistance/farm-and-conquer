@@ -63,7 +63,15 @@ export const GameManager = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root />,
+      element: (
+        <Root
+          timerActions={{
+            pause: pause,
+            resume: resume,
+            restart: restart,
+          }}
+        />
+      ),
       children: [
         {
           path: "/map",
@@ -88,12 +96,6 @@ export const GameManager = () => {
 
   return (
     <div>
-      <Button type="primary" onClick={() => pause()}>
-        Pause the timer
-      </Button>
-      <Button type="primary" onClick={() => resume()}>
-        Resume the timer
-      </Button>
       <RouterProvider router={router} />
     </div>
   );
