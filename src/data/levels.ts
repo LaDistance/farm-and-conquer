@@ -10,6 +10,7 @@ export const levels = [
     description:
       "The tutorial level, made to teach you the basics of the game.",
     initialMoney: 1000,
+    // Add a win condition
     parcels: [
       {
         id: 1,

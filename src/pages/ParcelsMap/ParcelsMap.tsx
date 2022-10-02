@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ParcelMapCard } from "../../components/ParcelMapCard/ParcelMapCard";
 import { selectParcels } from "../../features/parcels/parcelsSlice";
 import pageStyles from "../../styles/PageStyles.module.scss";
+import { Parcel } from "../../types/Parcel";
+import { distanceBetween, getAllNeighbors } from "../../util/util";
 export const ParcelsMap = () => {
   const parcels = useAppSelector(selectParcels);
   const dispatch = useAppDispatch();
@@ -12,6 +14,10 @@ export const ParcelsMap = () => {
     () => WidthProvider(Responsive),
     []
   );
+
+  const neighbors = useMemo(() => {
+    return getAllNeighbors(parcels);
+  }, [parcels]);
 
   return (
     <div className={pageStyles.page}>
@@ -36,7 +42,11 @@ export const ParcelsMap = () => {
             key={parcel.id}
             data-grid={{ x: parcel.x * 2, y: parcel.y, w: 2, h: 1 }}
           >
-            <ParcelMapCard parcel={parcel} owner={parcel.owner} />
+            <ParcelMapCard
+              parcel={parcel}
+              owner={parcel.owner}
+              isNeighbor={neighbors.has(parcel)}
+            />
           </div>
         ))}
       </ResponsiveReactGridLayout>
