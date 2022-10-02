@@ -74,8 +74,7 @@ export const GameManager = () => {
       return;
     }
 
-    console.warn("Initiating level n°", level);
-
+    console.warn("Initiating level n°", level, loadedLevel);
     // Pausing the timer so there's no side effect
     pause();
     // set the level
@@ -90,9 +89,11 @@ export const GameManager = () => {
     // Resetting the tick counter
     dispatch(resetTickCounter());
 
+    resume();
     // Restarting the timer
     const newTimestamp = new Date();
     newTimestamp.setSeconds(newTimestamp.getSeconds() + 10);
+
     restart(newTimestamp);
   };
 

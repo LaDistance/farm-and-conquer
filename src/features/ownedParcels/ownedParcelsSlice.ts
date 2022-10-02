@@ -15,7 +15,7 @@ export const ownedParcelsSlice = createSlice({
       state = state.filter((id) => id !== action.payload);
     },
     setOwnedParcels: (state, action: PayloadAction<number[]>) => {
-      state = action.payload;
+      return action.payload;
     },
   },
 });

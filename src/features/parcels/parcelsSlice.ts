@@ -30,7 +30,7 @@ export const parcelsSlice = createSlice({
     },
 
     setParcels: (state, action: PayloadAction<Parcel[]>) => {
-      state = action.payload;
+      return action.payload;
     },
 
     // Updates

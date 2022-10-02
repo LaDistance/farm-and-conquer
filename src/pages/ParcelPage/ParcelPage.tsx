@@ -8,7 +8,7 @@ import { decrementMoney, selectMoney } from "../../features/money/moneySlice";
 import { Building } from "../../components/Building/Building";
 
 import { useEffect } from "react";
-import { getLayouts } from "../../data/layouts";
+import { getFarmBuildingsLayout, getLayouts } from "../../data/layouts";
 
 // CSS
 import "react-grid-layout/css/styles.css";
@@ -65,7 +65,9 @@ export const ParcelPage = () => {
 
   return (
     <div className={pageStyles.page}>
-      <ResponsiveGridLayout layouts={getLayouts(parcel.farmBuildings)}>
+      <ResponsiveGridLayout
+        layouts={getLayouts(parcel.farmBuildings, getFarmBuildingsLayout)}
+      >
         {parcel.farmBuildings.map((building) => (
           <div className={styles.gridItem} key={building.building.id}>
             <Building
