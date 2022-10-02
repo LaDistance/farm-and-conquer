@@ -6,15 +6,15 @@ import {
 } from "../../features/parcels/parcelsSlice";
 import { decrementMoney, selectMoney } from "../../features/money/moneySlice";
 import { Building } from "../../components/Building/Building";
-import { Responsive, WidthProvider } from "react-grid-layout";
 
-import { useEffect, useMemo } from "react";
-import { breakpoints, columns, getLayouts } from "../../data/layouts";
+import { useEffect } from "react";
+import { getLayouts } from "../../data/layouts";
 
 // CSS
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import styles from "./ParcelPage.module.scss";
+import { ResponsiveGridLayout } from "../../components/ResponsiveGridLayout/ResponsiveGridLayout";
 export const ParcelPage = () => {
   // Hooks
   const { parcelId } = useParams<{ parcelId: string }>();
@@ -22,11 +22,6 @@ export const ParcelPage = () => {
   const money = useAppSelector(selectMoney);
   const dispatch = useAppDispatch();
 
-  // Grid
-  const ResponsiveReactGridLayout = useMemo(
-    () => WidthProvider(Responsive),
-    []
-  );
   useEffect(() => {
     console.log("Re-render parcel page");
   }, []);
@@ -69,34 +64,21 @@ export const ParcelPage = () => {
 
   return (
     <div>
-      <ResponsiveReactGridLayout
-        verticalCompact={true}
-        layouts={getLayouts(parcel.farmBuildings)}
-        breakpoints={breakpoints}
-        preventCollision={false}
-        cols={columns}
-        rowHeight={200}
-        autoSize={true}
-        isDraggable={false}
-        isResizable={false}
-        margin={{
-          lg: [20, 20],
-          md: [20, 20],
-          sm: [20, 20],
-          xs: [20, 20],
-          xxs: [20, 20],
-        }}
-      >
+      <ResponsiveGridLayout layouts={getLayouts(parcel.farmBuildings)}>
         {parcel.farmBuildings.map((building) => (
           <div className={styles.gridItem} key={building.building.id}>
             <Building
               title={building.building.name}
               count={building.count}
+              price={building.building.price}
+              individualIncome={building.building.moneyPerTick}
+              income={building.building.moneyPerTick * building.count}
+              disabled={building.building.price > money}
               handleBuy={() => buyBuilding(building.building.id, money)}
             />
           </div>
         ))}
-      </ResponsiveReactGridLayout>
+      </ResponsiveGridLayout>
     </div>
   );
 };

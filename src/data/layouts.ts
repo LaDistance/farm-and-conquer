@@ -2,7 +2,7 @@ import { OwnedFarmBuilding } from "../types/OwnedFarmBuilding";
 
 export const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
 
-export const columns = { lg: 8, md: 8, sm: 4, xs: 2, xxs: 2 };
+export const columns = { lg: 10, md: 8, sm: 4, xs: 2, xxs: 2 };
 
 export const getLayout = (cols: number, farmBuildings: OwnedFarmBuilding[]) => {
   const layout = farmBuildings.map((farmBuilding, index) => ({
