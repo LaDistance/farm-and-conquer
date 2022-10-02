@@ -3,27 +3,28 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useTimer } from "react-timer-hook";
 import { OwnedParcels } from "../pages/OwnedParcels/OwnedParcels";
 import { Root } from "../components/Root/Root";
-import { incrementMoney } from "../features/money/moneySlice";
+import { incrementMoney, setMoney } from "../features/money/moneySlice";
 import {
   selectOwnedParcels,
   setOwnedParcels,
 } from "../features/ownedParcels/ownedParcelsSlice";
-import {
-  selectParcels,
-  setParcel,
-  setParcels,
-} from "../features/parcels/parcelsSlice";
+import { selectParcels, setParcels } from "../features/parcels/parcelsSlice";
 import { updateSeconds } from "../features/seconds/secondsSlice";
-import { increment } from "../features/tickCounter/tickCounterSlice";
+import {
+  increment,
+  resetTickCounter,
+} from "../features/tickCounter/tickCounterSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { ParcelPage } from "../pages/ParcelPage/ParcelPage";
 import { ParcelsMap } from "../pages/ParcelsMap/ParcelsMap";
 import { updateLevel } from "../features/level/levelSlice";
 import { levels } from "../data/levels";
+import { LevelChoice } from "../pages/LevelChoice/LevelChoice";
 export const GameManager = () => {
   const parcels = useAppSelector(selectParcels);
   const ownedParcels = useAppSelector(selectOwnedParcels);
   const dispatch = useAppDispatch();
+
   // Flip state is necessary to force a re-render
   const [flipState, setFlipState] = useState(true);
 
@@ -66,20 +67,35 @@ export const GameManager = () => {
     // Initializes all the game data for a new game, depending on the chosen level
 
     // Does the level exist ?
-    if (Object.keys(levels).includes(level.toString())) {
-      console.warn("This level does not exist.");
+    const loadedLevel = levels.find((levelData) => levelData.id === level);
+
+    if (!loadedLevel) {
+      console.warn("Level not found");
       return;
     }
 
-    const loadedLevel = levels[level as keyof typeof levels];
+    console.warn("Initiating level n°", level);
 
+    // Pausing the timer so there's no side effect
+    pause();
     // set the level
     dispatch(updateLevel(level));
+    // set the initial money
+    dispatch(setMoney(loadedLevel.initialMoney));
     // set the parcels
     dispatch(setParcels(loadedLevel.parcels));
     // set the owned parcels
     dispatch(setOwnedParcels(loadedLevel.ownedParcels));
+
+    // Resetting the tick counter
+    dispatch(resetTickCounter());
+
+    // Restarting the timer
+    const newTimestamp = new Date();
+    newTimestamp.setSeconds(newTimestamp.getSeconds() + 10);
+    restart(newTimestamp);
   };
+
   const { seconds, pause, resume, restart } = useTimer({
     expiryTimestamp: firstTimestamp,
     onExpire: updateGame,
@@ -98,6 +114,10 @@ export const GameManager = () => {
         />
       ),
       children: [
+        {
+          path: "/",
+          element: <LevelChoice initializeGame={initializeGame} />,
+        },
         {
           path: "/map",
           element: <ParcelsMap />,
