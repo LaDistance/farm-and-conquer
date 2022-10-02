@@ -11,6 +11,7 @@ import { Dispatch, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectParcels,
+  setParcelOwner,
   setParcelSoldiers,
 } from "../../features/parcels/parcelsSlice";
 import { Parcel } from "../../types/Parcel";
@@ -30,6 +31,7 @@ export const AttackModal = ({
   const [confirmation, setConfirmation] = useState(false);
   const [soldiersToSend, setSoldiersToSend] = useState(0);
   const [parcelToSendFrom, setParcelToSendFrom] = useState<Parcel | null>();
+  const [win, setWin] = useState<boolean | null>(null);
   const parcels = useAppSelector(selectParcels);
   const dispatch = useAppDispatch();
   if (!attackedParcel) return <></>;
@@ -56,6 +58,7 @@ export const AttackModal = ({
 
     // If lose:
     if (!win) {
+      setWin(false);
       // wipe out the soldiers of the attacking parcel
       dispatch(setParcelSoldiers({ id: parcelToSendFrom!.id, soldiers: 0 }));
       // Kill part of the soldiers of the attacked parcel
@@ -68,6 +71,7 @@ export const AttackModal = ({
     }
     // if win
     else {
+      setWin(true);
       // Remove the soldiers from the attacking parcel
       dispatch(
         setParcelSoldiers({
@@ -79,7 +83,8 @@ export const AttackModal = ({
       dispatch(
         setParcelSoldiers({
           id: attackedParcel.id,
-          soldiers: soldiersToSend - attackedParcel.soldiers,
+          // For now it's half of the sent soldiers
+          soldiers: soldiersToSend / 2,
         })
       );
       // Set the owner of the attacked parcel to the owner of the attacking parcel
@@ -110,7 +115,7 @@ export const AttackModal = ({
               Yes, I want to attack this parcel.
             </Button>
           </>
-        ) : (
+        ) : win === null ? (
           <>
             <p> Which parcel do you want to attack from ?</p>
             <Radio.Group onChange={onParcelSelect} value={parcelToSendFrom}>
@@ -127,7 +132,7 @@ export const AttackModal = ({
                 <InputNumber
                   value={soldiersToSend}
                   onChange={onSoldiersInputChange}
-                  max={parcelToSendFrom.soldiers}
+                  max={parcelToSendFrom.soldiers + 1}
                   min={1}
                 />
                 <Divider />
@@ -137,11 +142,40 @@ export const AttackModal = ({
               </>
             )}
           </>
+        ) : win ? (
+          <>
+            <p>You won the attack !</p>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                setWin(null);
+                setAttackedParcel(null);
+                setConfirmation(false);
+                setModalOpen(false);
+              }}
+            >
+              Close
+            </Button>
+          </>
+        ) : (
+          <>
+            <p>You lost the attack !</p>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                setWin(null);
+                setAttackedParcel(null);
+                setConfirmation(false);
+                setModalOpen(false);
+              }}
+            >
+              Close
+            </Button>
+          </>
         )}
       </div>
     </Modal>
   );
 };
-function setParcelOwner(arg0: { id: number; owner: number }): any {
-  throw new Error("Function not implemented.");
-}

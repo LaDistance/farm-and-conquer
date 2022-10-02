@@ -19,7 +19,7 @@ export const levels: Level[] = [
         y: 1,
         farmBuildings: initializeFarmBuildings(),
         warBuildings: initializeWarBuildings(),
-        soldiers: 0,
+        soldiers: 2000,
         owner: 1,
       },
       {
